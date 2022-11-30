@@ -21,13 +21,23 @@ export default {
                 fr: {
                     img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/2560px-Flag_of_France.svg.png'
                 },
+                id: {
+                    img: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP8AAACqCAMAAABVlWm8AAAABlBMVEX/AAD///9BHTQRAAAAhElEQVR4nO3PMQEAAAjAIO1f2hRegwbMAAAAAAAAAAAAAAAAAAAAAAAAAAAAPNk2/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv82/zb/Nv+2A+BhVKwOtdkDAAAAAElFTkSuQmCC'
+                },
                 it: {
                     img: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/255px-Flag_of_Italy.svg.png'
                 },
                 ja: {
                     img: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAflBMVEX///+8AC23AAC7ACe7ACm4ABW5ABu4ABC6ACO5ABm7ACi4ABO6ACL46u3sx83NYXG3AAfnvcL14OTiqLH78fPKVGbEOE/9+PnGQFbjrbX35OjnuL/x09jsxszpv8XfoarSc4HXhZHAHj3CK0bbkJvQanm/DzbUeYbemqS/FjiKuKh1AAADpUlEQVR4nO3diXaiMBSA4QJCUFxwQ63WurTavv8LDtSZozZxipiQE/p/D+Dh3hOTS8jy9AQAAAAAAAAAAAAAAAAAAAqT3uplPRwO1y+r3sT2w1g3679usiBMRRIWEpGGQbZ57f/WzMz6272fRN1Oy7vU6nSjxN9v+zPbD1i74aAtutfZuMpMV7QHS9sPWafVMUnim/n4Jw6Tzcr2o9ZkPfe7PybkpOtna9uPW4PlTgQlM1IIxK7pf6H+TtzuRNRaYte3/dgG9ab+vRn5yoo/7dl+dFM+xM8dq1qcfth+eCN6WVIxI4Uka2BTWST3dK2yQCxsh6DbMX0oI4V0YzsIrWbz9sMp8bx21qB6v/dZtkj7v/izMZ3KKHqsKzkLopHtYPQYJVWKErWWaERSRqG+lORJCRuQlF6kMyV5UiLn+5SZ19GaEi//PddHn6xqOX9bnNkO6jHvkfaUeF70bjusRywer15V0rHtwKp79o2kxPP8Z9uhVbbXVat9F+xth1bVW2goJZ4XvtkOrhpj/5yC72bpNjf1zykEc9vhVbEUBlPiecLF6XxPb03/XetgO8D7jc11sCehe0VKbLaZ5A0lth3ivRamm0neUFybtN6ZbiZ5Q9nZDvI+fTMvOtdSt76ZDvRPEcjige0w7zGpo5nkDcWlNV5jHZ9zftZ2aTg2WtafuVTgT0y+/V3y3fnzLM0XJyehOy8973WMOoXYnZlZw69/Zy3PdqhlPdczEhdSVyZma+tOHOpQtnpWVpTR3doOtqRpPdVJIZ7aDrakQ11drEOzbXVVbAXfdrDl1DjsODPwrMxO2F8TbuzcWNc3FOeDsRv7Nhb1TBSctN2YlK1p8uRvTtyYQhmbWIdzS0ROyEmDckJ/ImHckVGfyKhjZbzvKPBeLGP+RMY8m4z5WBnz9jK+7yjwHVDG92IZ6wpkrD9RYJ2SjPVsMtY9KrA+VsY6agXW28vYl6HA/h0Z+7wUDM+2OTPDdsnwvtHUnVedC+wvlpndh+7MZNI1zitQ4FwLGeefKJg6J8e5CvbSxsh5ShvbYT2Gc7dks4PufrZzcP18Ns7xU+G8RwWt54ImjUgJ58cqcc6wAudRq+g4t/xoOwjdlnddHSILnDx87Afcg6DywH0Zopn3ZTxxr4oa9++ocE+TCvd5qayOYbl7345u7LrQ5Ot+wNtH33d+3f2AJ8U9kuLmPZIvzarjy7t13+hvzccZ99ICAAAAAAAAAAAAAAAAACD7A+PaSTdtOrdEAAAAAElFTkSuQmCC'
                 },
-            }
+            },
+            starsContainer: [
+                '<i class="icon fa-solid fa-star"></i>',
+                '<i class="fa-solid fa-star"></i>',
+                '<i class="fa-solid fa-star"></i>',
+                '<i class="fa-solid fa-star"></i>',
+                '<i class="fa-solid fa-star"></i>'
+            ],
         }
     },
     methods: {
@@ -44,42 +54,54 @@ export default {
 </script>
 
 <template>
-    <section>
-        <!-- Qua verranno stampati i film -->
-        <div v-if="this.infoMovie" class="video-card">
-            <div class="cover">
-                <img :src="`https://image.tmdb.org/t/p/w342${infoMovie.poster_path}`" alt="">
-            </div>
-            <div class="title">Titolo: {{infoMovie.title}}</div>
-            <div class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
-            <div class="language">
-                Lingua: {{infoMovie.original_language}} <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
-            </div>
-            <div class="votes">Voto: {{infoMovie.vote_average}}</div>
+    <!-- Questa card viene utilizzata per i film -->
+    <div v-if="this.infoMovie" class="video-card">
+        <div class="cover">
+            <img v-if="(infoMovie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoMovie.poster_path}`" alt="">
+            <div v-else><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD9XhhkjfB5_BSNWDKQnGsxFbzwj6HxiE5Dw&usqp=CAU" alt=""></div>
         </div>
-        <!-- /Qua verranno stampati i film -->
+        <div class="title">Titolo: {{infoMovie.title}}</div>
+        <div class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
+        <div class="language">
+            Lingua: {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+        </div>
+        <div class="votes">
+            Voto: {{ (infoMovie.vote_average / 2).toFixed(0) }} /
+            <span class="icon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+        </div>
+    </div>
+    <!-- /Questa card viene utilizzata per i film -->
 
-        <!-- Qua verranno stampati le serie TV -->
-        <div v-else="this.infoSerie" class="video-card">
-            <div class="cover">
-                <img :src="`https://image.tmdb.org/t/p/w342${infoSerie.poster_path}`" alt="">
-            </div>
-            <div class="title">Titolo: {{ infoSerie.name }}</div>
-            <div class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
-            <div class="language">
-                Lingua: {{infoSerie.original_language}} <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
-            </div>
-            <div class="votes">Voto: {{ infoSerie.vote_average }}</div>
-        <!-- /Qua verranno stampati le serie TV -->
+    <!-- Questa card viene utilizzata per le serie TV -->
+    <div v-else="this.infoSerie" class="video-card">
+        <div class="cover">
+            <img v-if="(infoSerie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoSerie.poster_path}`" alt="">
+            <div v-else><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD9XhhkjfB5_BSNWDKQnGsxFbzwj6HxiE5Dw&usqp=CAU" alt=""></div>
         </div>
-    </section>
+        <div class="title">Titolo: {{ infoSerie.name }}</div>
+        <div class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
+        <div class="language">
+            Lingua: {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
+        </div>
+        <div class="votes">
+            Voto: {{ (infoSerie.vote_average / 2).toFixed(0) }} /
+            <span class="icon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+        </div>
+    <!-- /Questa card viene utilizzata per le serie TV -->
+    </div>
 </template>
 
 <style lang="scss" scoped>
-.cover img{
-    width: 200px;
-}
 .language img {
-    width: 25px;
+    width: 15px;
+}
+
+.icon{
+    color: rgba($color: gray, $alpha: 0.3);
+    filter: drop-shadow(0 0 black);
+    margin-right: .125rem;
+}
+.filled_star{
+    color: yellow !important;
 }
 </style>

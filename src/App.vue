@@ -50,7 +50,6 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
 
 <template>
   <AppHeader @performSearch="findFilmsAndSeries"/>
-
   <AppMain />
 </template>
 
