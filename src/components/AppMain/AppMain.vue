@@ -24,24 +24,28 @@ export default {
 <template>
     <main class="container">
         <!-- Film -->
-        <h2 v-if="(this.store.movies.length !== 0)">Film</h2>
-        <h2 v-if="(this.store.searchText !== '' && this.store.movies.length === 0)">{{this.store.moviesNotFound}}</h2>
-        <section class="film">
-            <AppCard
-            v-for="movie in this.store.movies"
-            :infoMovie="movie"
-            />
+        <section v-if="(this.store.movies.length > 0)">
+            <h2 v-if="(this.store.movies.length !== 0)">Film</h2>
+            <h2 v-if="(this.store.searchText !== '' && this.store.movies.length === 0)">{{this.store.moviesNotFound}}</h2>
+            <div class="film">
+                <AppCard
+                v-for="movie in this.store.movies"
+                :infoMovie="movie"
+                />
+            </div>
         </section>
         <!-- /Film -->
 
         <!-- Serie TV -->
-        <h2 v-if="(this.store.movies.length !== 0)">Serie TV</h2>
-        <h2 v-if="(this.store.searchText !== '' && this.store.series.length === 0)">{{this.store.seriesNotFound}}</h2>
-        <section class="serie">
-            <AppCard
-            v-for="serie in this.store.series"
-            :infoSerie="serie"
-            />
+        <section v-if="(this.store.series.length > 0)">
+            <h2 v-if="(this.store.movies.length !== 0)">Serie TV</h2>
+            <h2 v-if="(this.store.searchText !== '' && this.store.series.length === 0)">{{this.store.seriesNotFound}}</h2>
+            <div class="serie">
+                <AppCard
+                v-for="serie in this.store.series"
+                :infoSerie="serie"
+                />
+            </div>
         </section>
         <!-- /Serie TV -->
 
@@ -58,11 +62,12 @@ export default {
     main {
         color: white;
         margin-right: 0;
+        height: calc(100% - 70px);
         h2{
             color: white;
             padding: .625rem 0;
         }
-        section{
+        div.serie, div.film {
             display: flex;
             overflow-x: auto;
             margin-bottom: .9375rem;
@@ -71,6 +76,8 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            height: 100%;
         }
     }
 </style>
