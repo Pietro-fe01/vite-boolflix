@@ -9,7 +9,13 @@ export default {
     },
     data(){
         return {
-            store
+            store,
+        }
+    },
+    methods: {
+        clearAll: function(){
+            this.store.movies = [];
+            this.store.series = [];
         }
     }
 }
@@ -17,23 +23,34 @@ export default {
 
 <template>
     <main class="container">
+        <!-- Film -->
         <h2 v-if="(this.store.movies.length !== 0)">Film</h2>
+        <h2 v-if="(this.store.searchText !== '' && this.store.movies.length === 0)">{{this.store.moviesNotFound}}</h2>
         <section class="film">
             <AppCard
             v-for="movie in this.store.movies"
             :infoMovie="movie"
             />
-        </section>  
+        </section>
+        <!-- /Film -->
+
+        <!-- Serie TV -->
         <h2 v-if="(this.store.movies.length !== 0)">Serie TV</h2>
+        <h2 v-if="(this.store.searchText !== '' && this.store.series.length === 0)">{{this.store.seriesNotFound}}</h2>
         <section class="serie">
             <AppCard
             v-for="serie in this.store.series"
             :infoSerie="serie"
             />
         </section>
-        <div v-if="(this.store.movies.length === 0)" class="pre-message">
-            <h2>Benvenuto! Effettua una ricerca per visualizzare la lista dei film!</h2>
+        <!-- /Serie TV -->
+
+        <!-- Messaggio che viene stampato solo se il campo input è vuoto -->
+        <div v-if="this.store.searchText === ''" class="pre-message">
+            <h2>Benvenuto, inizia subito la ricerca !</h2>
+            {{clearAll()}}
         </div>
+        <!-- /Messaggio che viene stampato solo se il campo input è vuoto -->
     </main>
 </template>
 
@@ -41,7 +58,6 @@ export default {
     main {
         color: white;
         margin-right: 0;
-        height: calc(100vh - 4.2rem);
         h2{
             color: white;
             padding: .625rem 0;
@@ -55,7 +71,6 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
         }
     }
 </style>

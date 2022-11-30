@@ -4,7 +4,7 @@ export default {
     name: 'AppCard',
     props: {
         infoMovie: Object,
-        infoSerie: Object
+        infoSerie: Object,
     },
     data(){
         return {
@@ -36,7 +36,7 @@ export default {
                 '<i class="fa-solid fa-star"></i>',
                 '<i class="fa-solid fa-star"></i>',
                 '<i class="fa-solid fa-star"></i>',
-                '<i class="fa-solid fa-star"></i>'
+                '<i class="fa-solid fa-star"></i>',
             ],
         }
     },
@@ -44,9 +44,9 @@ export default {
         // Metodo che stampa la relativa bandiera se presente, altrimenti stampa immagine default
         checkLanguage(type){
             if(this.languageFlags.hasOwnProperty(type.original_language)){
-                return this.languageFlags[type.original_language].img
+                return this.languageFlags[type.original_language].img;
             } else {
-                return this.languageFlags.default.img
+                return this.languageFlags.default.img;
             }
         }
     }
@@ -61,14 +61,16 @@ export default {
             <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
         </div>
         <dir class="card-info">
-            <div class="title">Titolo: {{infoMovie.title}}</div>
+            <div class="title"><b>Titolo:</b> {{infoMovie.title}}</div>
             <div v-if="!infoMovie.original_title === infoMovie.title" class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
             <div class="language">
-                Lingua: {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+                <b>Lingua:</b> {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
             </div>
             <div class="votes">
-                Voto: {{ (infoMovie.vote_average / 2).toFixed(0) }} /
-                <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+                <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+            </div>
+            <div class="description">
+                <b>Descrizione:</b> {{infoMovie.overview}}
             </div>
         </dir>
     </div>
@@ -81,14 +83,16 @@ export default {
             <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
         </div>
         <div class="card-info">
-            <div class="title">Titolo: {{ infoSerie.name }}</div>
+            <div class="title"><b>Titolo:</b> {{ infoSerie.name }}</div>
             <div v-if="(!infoSerie.original_name === infoSerie.name)" class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
             <div class="language">
-                Lingua: {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
+                <b>Lingua:</b> {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
             </div>
             <div class="votes">
-                Voto: {{ (infoSerie.vote_average / 2).toFixed(0) }} /
-                <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+                <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+            </div>
+            <div class="description">
+                <b>Descrizione:</b> {{infoSerie.overview}}
             </div>
         </div>
     <!-- /Questa card viene utilizzata per le serie TV -->
@@ -122,6 +126,9 @@ export default {
             opacity: 0;
             transition: opacity 0.5s;
             transition:  0.5s;
+            overflow-y: auto;
+            line-height: 1.25rem;
+            transition: all 0.5s;
             .language img {
                 width: 15px;
             }

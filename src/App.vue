@@ -17,8 +17,8 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
     },
     methods: {
       findFilmsAndSeries(){
-        this.findFilms()
-        this.findSeries()
+        this.findFilms();
+        this.findSeries();
       },
       findFilms(){
         axios.get("https://api.themoviedb.org/3/search/movie", {
@@ -30,6 +30,11 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
         })
         .then(res => {
           this.store.movies = res.data.results;
+          if(res.data.results.length === 0){
+            this.store.moviesNotFound = 'Spiacenti, nessun film trovato!';
+          } else {
+            this.store.moviesNotFound = null;
+          }
         })
       },
       findSeries(){
@@ -42,6 +47,11 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
         })
         .then(res => {
           this.store.series = res.data.results;
+          if(res.data.results.length === 0){
+            this.store.seriesNotFound = 'Spiacenti, nessuna serie TV trovata!';
+          } else {
+            this.store.seriesNotFound = null;
+          }
         })
       }
     }
