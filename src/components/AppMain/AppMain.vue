@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-    <main>
+    <main class="container">
         <section class="film">
             <h2>Film</h2>
             <AppCard
