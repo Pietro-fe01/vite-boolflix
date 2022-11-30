@@ -17,9 +17,16 @@ export default {
 
 <template>
     <main>
+        <h2>Film</h2>
         <AppCard
         v-for="movie in this.store.movies"
-        :info="movie"
+        :infoMovie="movie"
+        />
+
+        <h2>Serie TV</h2>
+        <AppCard
+        v-for="serie in this.store.series"
+        :infoSerie="serie"
         />
     </main>
 </template>
