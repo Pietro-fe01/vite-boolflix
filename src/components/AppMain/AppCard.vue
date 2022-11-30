@@ -58,17 +58,19 @@ export default {
     <div v-if="this.infoMovie" class="video-card">
         <div class="cover">
             <img v-if="(infoMovie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoMovie.poster_path}`" alt="">
-            <div v-else><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD9XhhkjfB5_BSNWDKQnGsxFbzwj6HxiE5Dw&usqp=CAU" alt=""></div>
+            <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
         </div>
-        <div class="title">Titolo: {{infoMovie.title}}</div>
-        <div class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
-        <div class="language">
-            Lingua: {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
-        </div>
-        <div class="votes">
-            Voto: {{ (infoMovie.vote_average / 2).toFixed(0) }} /
-            <span class="icon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
-        </div>
+        <dir class="card-info">
+            <div class="title">Titolo: {{infoMovie.title}}</div>
+            <div v-if="!infoMovie.original_title === infoMovie.title" class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
+            <div class="language">
+                Lingua: {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+            </div>
+            <div class="votes">
+                Voto: {{ (infoMovie.vote_average / 2).toFixed(0) }} /
+                <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+            </div>
+        </dir>
     </div>
     <!-- /Questa card viene utilizzata per i film -->
 
@@ -76,32 +78,61 @@ export default {
     <div v-else="this.infoSerie" class="video-card">
         <div class="cover">
             <img v-if="(infoSerie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoSerie.poster_path}`" alt="">
-            <div v-else><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD9XhhkjfB5_BSNWDKQnGsxFbzwj6HxiE5Dw&usqp=CAU" alt=""></div>
+            <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
         </div>
-        <div class="title">Titolo: {{ infoSerie.name }}</div>
-        <div class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
-        <div class="language">
-            Lingua: {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
-        </div>
-        <div class="votes">
-            Voto: {{ (infoSerie.vote_average / 2).toFixed(0) }} /
-            <span class="icon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+        <div class="card-info">
+            <div class="title">Titolo: {{ infoSerie.name }}</div>
+            <div v-if="(!infoSerie.original_name === infoSerie.name)" class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
+            <div class="language">
+                Lingua: {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
+            </div>
+            <div class="votes">
+                Voto: {{ (infoSerie.vote_average / 2).toFixed(0) }} /
+                <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+            </div>
         </div>
     <!-- /Questa card viene utilizzata per le serie TV -->
     </div>
 </template>
 
 <style lang="scss" scoped>
-.language img {
-    width: 15px;
-}
-
-.icon{
-    color: rgba($color: gray, $alpha: 0.3);
-    filter: drop-shadow(0 0 black);
-    margin-right: .125rem;
-}
-.filled_star{
-    color: yellow !important;
-}
+    .video-card{
+        position: relative;
+        margin-right: 15px;
+        margin-bottom: .9375rem;
+        &:hover .card-info{
+            opacity: 1;
+            cursor: pointer;
+        }
+        .cover{
+            .default-cover{
+                width: 185px;
+                height: 278px;
+            }
+        }
+        .card-info{
+            padding: 1.25rem .625rem;
+            background-color: rgba($color: #000000, $alpha: 0.8);
+            border: 1px solid white;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            transition:  0.5s;
+            .language img {
+                width: 15px;
+            }
+            .starsicon{
+                color: rgba($color: gray, $alpha: 0.5);
+                filter: drop-shadow(0 0 black);
+                margin-right: .125rem;
+            }
+            .filled_star{
+                color: yellow !important;
+            }
+        }
+    }
 </style>
