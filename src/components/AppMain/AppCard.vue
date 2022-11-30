@@ -70,7 +70,9 @@ export default {
                 <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
             </div>
             <div class="description">
-                <b>Descrizione:</b> {{infoMovie.overview}}
+                <b>Descrizione:</b> 
+                <span v-if="infoMovie.overview !== ''">{{infoMovie.overview}}</span>
+                <span v-else> non presente, ci scusiamo per il disagio.</span>
             </div>
         </dir>
     </div>
@@ -92,7 +94,9 @@ export default {
                 <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
             </div>
             <div class="description">
-                <b>Descrizione:</b> {{infoSerie.overview}}
+                <b>Descrizione:</b> 
+                <span v-if="infoSerie.overview !== ''">{{infoSerie.overview}}</span>
+                <span v-else> non presente, ci scusiamo per il disagio.</span>
             </div>
         </div>
     <!-- /Questa card viene utilizzata per le serie TV -->
@@ -129,6 +133,10 @@ export default {
             overflow-y: auto;
             line-height: 1.25rem;
             transition: all 0.5s;
+            b{
+                border-left: 2px solid red;
+                padding-left: 3px;
+            }
             .language img {
                 width: 15px;
             }

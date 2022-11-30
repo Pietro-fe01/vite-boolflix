@@ -3,7 +3,6 @@
   import axios from 'axios';
   import AppHeader from './components/AppHeader/AppHeader.vue';
   import AppMain from './components/AppMain/AppMain.vue';
-import { registerRuntimeHelpers } from '@vue/compiler-core';
 
   export default {
     components: {
@@ -17,8 +16,10 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
     },
     methods: {
       findFilmsAndSeries(){
-        this.findFilms();
-        this.findSeries();
+        if(this.store.searchText !== ''){
+          this.findFilms();
+          this.findSeries();
+        }
       },
       findFilms(){
         axios.get("https://api.themoviedb.org/3/search/movie", {

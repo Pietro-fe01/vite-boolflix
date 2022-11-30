@@ -25,8 +25,7 @@ export default {
     <main class="container">
         <!-- Film -->
         <section v-if="(this.store.movies.length > 0)">
-            <h2 v-if="(this.store.movies.length !== 0)">Film</h2>
-            <h2 v-if="(this.store.searchText !== '' && this.store.movies.length === 0)">{{this.store.moviesNotFound}}</h2>
+            <h2>Film</h2>
             <div class="film">
                 <AppCard
                 v-for="movie in this.store.movies"
@@ -38,8 +37,7 @@ export default {
 
         <!-- Serie TV -->
         <section v-if="(this.store.series.length > 0)">
-            <h2 v-if="(this.store.movies.length !== 0)">Serie TV</h2>
-            <h2 v-if="(this.store.searchText !== '' && this.store.series.length === 0)">{{this.store.seriesNotFound}}</h2>
+            <h2>Serie Tv</h2>
             <div class="serie">
                 <AppCard
                 v-for="serie in this.store.series"
@@ -55,6 +53,12 @@ export default {
             {{clearAll()}}
         </div>
         <!-- /Messaggio che viene stampato solo se il campo input è vuoto -->
+
+        <!-- Messaggio che viene stampato solo se ila ricerca non trova nulla -->
+        <div v-if="this.store.searchText !== '' && (this.store.movies.length === 0 && this.store.series.length === 0)" class="pre-message">
+            <h2>Spiacente, nessun risultato.</h2>
+        </div>
+        <!-- /Messaggio che viene stampato solo se ila ricerca non trova nulla -->
     </main>
 </template>
 
@@ -63,21 +67,32 @@ export default {
         color: white;
         margin-right: 0;
         height: calc(100% - 70px);
-        h2{
+        position: relative;
+
+        section{
+            padding-top: 40px;
+        }   
+
+        section h2{
             color: white;
-            padding: .625rem 0;
+            margin-bottom: 15px;
         }
         div.serie, div.film {
             display: flex;
             overflow-x: auto;
-            margin-bottom: .9375rem;
+            margin-bottom: .9375rem;;
         }
         .pre-message{
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background-color: rgba($color: #000000, $alpha: 0.5);
-            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0 20px;
+            height: 200px;
+            line-height: 200px;
+            border-radius: 1.875rem;
+            border: 3px dashed red;
         }
     }
 </style>
