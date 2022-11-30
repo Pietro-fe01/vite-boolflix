@@ -14,7 +14,7 @@ export default {
 <template>
     <header>
         <form @submit.prevent>
-            <input type="text" placeholder="Cerca film" v-model="store.searchText">
+            <input type="text" placeholder="Cerca film" autofocus v-model="store.searchText">
             <button type="submit" @click="$emit('performSearch')">CERCA</button>
         </form>
     </header>

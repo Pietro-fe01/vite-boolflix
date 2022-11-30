@@ -55,4 +55,5 @@ import { registerRuntimeHelpers } from '@vue/compiler-core';
 </template>
 
 <style lang="scss">
+  @import './style/global.scss'
 </style>
