@@ -19,8 +19,8 @@
         axios.get("https://api.themoviedb.org/3/search/movie", {
           params: {
             api_key: "b90930156a2c5e50e179e531a115e906",
-            query: "ritorno",
-            // query: this.store.searchText,
+            query: this.store.searchText,
+            language: "it-IT"
           }
         })
         .then(res => {
