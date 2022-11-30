@@ -45,7 +45,7 @@ export default {
                 </button>
                 <button class="my-profile">
                     <img class="my-profile__img" src="/src/assets/netflix-profile-acc.png" alt="netflix-profile-img">
-                    <i class="fa-solid fa-caret-down"></i>
+                    <i class="fa-solid fa-chevron-up"></i>
                 </button>
             </div>
         </div>
@@ -98,13 +98,18 @@ export default {
                 .my-profile{
                     display: flex;
                     align-items: center;
+
+                    &:hover i.fa-chevron-up{
+                        transform: rotate(180deg);
+                        transition: transform 0.5s;
+                    }
                     .my-profile__img{
                         border-radius: .625rem;
                         display: block;
                     }
-                    i.fa-caret-down{
+                    i.fa-chevron-up{
                         color: white;
-                        font-size: .75rem;
+                        font-size: 8px;
                         margin-left: .625rem;
                     }
                 }
