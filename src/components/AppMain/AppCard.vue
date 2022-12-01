@@ -6,6 +6,7 @@ export default {
         infoMovie: Object,
         infoSerie: Object,
         infoMostPopular: Object,
+        infoTopRated: Object,
     },
     data(){
         return {
@@ -64,7 +65,7 @@ export default {
             </div>
             <div class="card-info">
                 <div class="title"><b>Titolo:</b> {{infoMovie.title}}</div>
-                <div v-if="!infoMovie.original_title === infoMovie.title" class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
+                <div v-if="infoMovie.original_title !== infoMovie.title" class="original-title"><b>Titolo Originale: </b> {{infoMovie.original_title}}</div>
                 <div class="language">
                     <b>Lingua:</b> {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
                 </div>
@@ -90,7 +91,7 @@ export default {
             </div>
             <div class="card-info">
                 <div class="title"><b>Titolo:</b> {{ infoSerie.name }}</div>
-                <div v-if="(!infoSerie.original_name === infoSerie.name)" class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
+                <div v-if="(infoSerie.original_name !== infoSerie.name)" class="original-title"><b>Titolo originale: </b> {{ infoSerie.original_name }}</div>
                 <div class="language">
                     <b>Lingua:</b> {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
                 </div>
@@ -109,7 +110,6 @@ export default {
 
     <!-- Questa card viene utilizzata per i più popolari -->
     <div v-else-if="this.infoMostPopular" class="video-card">
-        <!-- {{this.infoMostPopular}} -->
         <div class="video-card-inner">
             <div class="cover">
                 <img class="cover__img" v-if="(infoMostPopular.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoMostPopular.poster_path}`" alt="">
@@ -117,7 +117,7 @@ export default {
             </div>
             <div class="card-info">
                 <div class="title"><b>Titolo:</b> {{ infoMostPopular.title }}</div>
-                <div v-if="(!infoMostPopular.original_title === infoMostPopular.title)" class="original-title">Titolo originale: {{ infoMostPopular.original_title }}</div>
+                <div v-if="(infoMostPopular.original_title !== infoMostPopular.title)" class="original-title"><b>Titolo originale: </b> {{ infoMostPopular.original_title }}</div>
                 <div class="language">
                     <b>Lingua:</b> {{infoMostPopular.original_language}} / <img :src="this.checkLanguage(this.infoMostPopular)" :alt="`${infoMostPopular.original_language}-flag`">
                 </div>
@@ -133,6 +133,32 @@ export default {
         </div>
     </div>
     <!-- /Questa card viene utilizzata per i più popolari -->
+
+    <!-- Questa card viene utilizzata per i più votati -->
+    <div v-else-if="this.infoTopRated" class="video-card">
+        <div class="video-card-inner">
+            <div class="cover">
+                <img class="cover__img" v-if="(infoTopRated.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoTopRated.poster_path}`" alt="">
+                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+            </div>
+            <div class="card-info">
+                <div class="title"><b>Titolo:</b> {{ infoTopRated.title }}</div>
+                <div v-if="(infoTopRated.original_title !== infoTopRated.title )" class="original-title"><b>Titolo originale:</b> {{ infoTopRated.original_title }}</div>
+                <div class="language">
+                    <b>Lingua:</b> {{infoTopRated.original_language}} / <img :src="this.checkLanguage(this.infoTopRated)" :alt="`${infoTopRated.original_language}-flag`">
+                </div>
+                <div class="votes">
+                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoTopRated.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="description">
+                    <b>Descrizione: </b> 
+                    <span v-if="infoTopRated.overview !== ''">{{infoTopRated.overview}}</span>
+                    <span v-else> non presente, ci scusiamo per il disagio.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Questa card viene utilizzata per i più votati -->
 </template>
 
 <style lang="scss" scoped>

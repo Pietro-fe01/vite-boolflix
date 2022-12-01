@@ -42,15 +42,27 @@ export default {
         <!-- /Serie TV -->
 
         <!-- Film e Serie TV più popolari -->
-        <section v-if="(this.store.searchText === '')">
-            <h2>I più popolari</h2>
-            <div class="popular">
-                <AppCard
-                v-for="popular in this.store.mostPopular"
-                :infoMostPopular="popular"
-                />
-            </div>
-        </section>
+        <div v-if="(this.store.searchText === '')">
+            <section>
+                <h2>I più popolari</h2>
+                <div class="popular">
+                    <AppCard
+                    v-for="popular in this.store.mostPopular"
+                    :infoMostPopular="popular"
+                    />
+                </div>
+            </section>
+
+            <section>
+                <h2>I più votati</h2>
+                <div class="top-rated">
+                    <AppCard
+                    v-for="top in this.store.topRated"
+                    :infoTopRated="top"
+                    />
+                </div>
+            </section>
+        </div>
         <!-- /Film e Serie TV più popolari -->
 
         <!-- Messaggio che viene stampato solo se la ricerca non trova nulla -->
@@ -80,7 +92,7 @@ export default {
             margin-bottom: 5px;
             margin-left: 20px;
         }
-        div.serie, div.film, div.popular {
+        div.serie, div.film, div.popular, div.top-rated {
             display: flex;
             overflow-x: auto;
             margin-bottom: .9375rem;
@@ -119,6 +131,6 @@ export default {
 
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
-            background-color: white;
+            background-color: rgba($color: red, $alpha: 0.8);
         }
 </style>
