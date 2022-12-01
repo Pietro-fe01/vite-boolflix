@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-    <main class="container">
+    <main>
         <!-- Film -->
         <section v-if="(this.store.movies.length > 0)">
             <h2>Film</h2>
@@ -54,11 +54,11 @@ export default {
         </div>
         <!-- /Messaggio che viene stampato solo se il campo input è vuoto -->
 
-        <!-- Messaggio che viene stampato solo se ila ricerca non trova nulla -->
-        <div v-if="this.store.searchText !== '' && (this.store.movies.length === 0 && this.store.series.length === 0)" class="pre-message">
+        <!-- Messaggio che viene stampato solo se la ricerca non trova nulla -->
+        <div v-if="this.store.searchText.length > 1 && (this.store.movies.length === 0 && this.store.series.length === 0)" class="pre-message">
             <h2>Spiacente, nessun risultato.</h2>
         </div>
-        <!-- /Messaggio che viene stampato solo se ila ricerca non trova nulla -->
+        <!-- /Messaggio che viene stampato solo se la ricerca non trova nulla -->
     </main>
 </template>
 
@@ -76,11 +76,12 @@ export default {
         section h2{
             color: white;
             margin-bottom: 15px;
+            margin-left: 15px;
         }
         div.serie, div.film {
             display: flex;
             overflow-x: auto;
-            margin-bottom: .9375rem;;
+            margin-bottom: .9375rem;
         }
         .pre-message{
             background-color: rgba($color: #000000, $alpha: 0.5);

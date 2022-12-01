@@ -56,83 +56,96 @@ export default {
 <template>
     <!-- Questa card viene utilizzata per i film -->
     <div v-if="this.infoMovie" class="video-card">
-        <div class="cover">
-            <img v-if="(infoMovie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoMovie.poster_path}`" alt="">
-            <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+        <div class="video-card-inner">
+            <div class="cover">
+                <img class="cover__img" v-if="(infoMovie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoMovie.poster_path}`" alt="">
+                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+            </div>
+            <div class="card-info">
+                <div class="title"><b>Titolo:</b> {{infoMovie.title}}</div>
+                <div v-if="!infoMovie.original_title === infoMovie.title" class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
+                <div class="language">
+                    <b>Lingua:</b> {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+                </div>
+                <div class="votes">
+                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="description">
+                    <b>Descrizione:</b> 
+                    <span v-if="infoMovie.overview !== ''">{{infoMovie.overview}}</span>
+                    <span v-else> non presente, ci scusiamo per il disagio.</span>
+                </div>
+            </div>
         </div>
-        <dir class="card-info">
-            <div class="title"><b>Titolo:</b> {{infoMovie.title}}</div>
-            <div v-if="!infoMovie.original_title === infoMovie.title" class="original-title">Titolo Originale: {{infoMovie.original_title}}</div>
-            <div class="language">
-                <b>Lingua:</b> {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
-            </div>
-            <div class="votes">
-                <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
-            </div>
-            <div class="description">
-                <b>Descrizione:</b> 
-                <span v-if="infoMovie.overview !== ''">{{infoMovie.overview}}</span>
-                <span v-else> non presente, ci scusiamo per il disagio.</span>
-            </div>
-        </dir>
     </div>
     <!-- /Questa card viene utilizzata per i film -->
 
     <!-- Questa card viene utilizzata per le serie TV -->
-    <div v-else="this.infoSerie" class="video-card">
-        <div class="cover">
-            <img v-if="(infoSerie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w185${infoSerie.poster_path}`" alt="">
-            <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+    <div v-else-if="this.infoSerie" class="video-card">
+        <div class="video-card-inner">
+            <div class="cover">
+                <img class="cover__img" v-if="(infoSerie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoSerie.poster_path}`" alt="">
+                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+            </div>
+            <div class="card-info">
+                <div class="title"><b>Titolo:</b> {{ infoSerie.name }}</div>
+                <div v-if="(!infoSerie.original_name === infoSerie.name)" class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
+                <div class="language">
+                    <b>Lingua:</b> {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
+                </div>
+                <div class="votes">
+                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="description">
+                    <b>Descrizione:</b> 
+                    <span v-if="infoSerie.overview !== ''">{{infoSerie.overview}}</span>
+                    <span v-else> non presente, ci scusiamo per il disagio.</span>
+                </div>
+            </div>
         </div>
-        <div class="card-info">
-            <div class="title"><b>Titolo:</b> {{ infoSerie.name }}</div>
-            <div v-if="(!infoSerie.original_name === infoSerie.name)" class="original-title">Titolo originale: {{ infoSerie.original_name }}</div>
-            <div class="language">
-                <b>Lingua:</b> {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
-            </div>
-            <div class="votes">
-                <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
-            </div>
-            <div class="description">
-                <b>Descrizione:</b> 
-                <span v-if="infoSerie.overview !== ''">{{infoSerie.overview}}</span>
-                <span v-else> non presente, ci scusiamo per il disagio.</span>
-            </div>
-        </div>
-    <!-- /Questa card viene utilizzata per le serie TV -->
     </div>
+    <!-- /Questa card viene utilizzata per le serie TV -->
 </template>
 
 <style lang="scss" scoped>
     .video-card{
         position: relative;
-        margin-right: 15px;
-        margin-bottom: .9375rem;
-        &:hover .card-info{
-            opacity: 1;
-            cursor: pointer;
+        margin: 20px 0;
+        margin-right: 20px;
+        perspective: 1000px;
+        &:hover .video-card-inner {
+            transform: rotateY(180deg);
+        }
+        .video-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         }
         .cover{
-            .default-cover{
-                width: 185px;
-                height: 278px;
+            .cover__img, .default-cover{
+                width: 220px;
+                height: 320px;
             }
+        }
+        .cover, .card-info {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .card-info{
             padding: 1.25rem .625rem;
-            background-color: rgba($color: #000000, $alpha: 0.8);
+            background-color: black;
             border: 1px solid white;
             position: absolute;
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
-            opacity: 0;
             transition: opacity 0.5s;
             transition:  0.5s;
             overflow-y: auto;
             line-height: 1.25rem;
             transition: all 0.5s;
+            transform: rotateY(180deg);
             b{
                 border-left: 2px solid red;
                 padding-left: 3px;
