@@ -70,6 +70,9 @@ export default {
 
         section{
             padding-top: 40px;
+            &:last-child{
+                padding-bottom: 40px;
+            }
         }   
 
         section h2{
@@ -95,4 +98,27 @@ export default {
             border: 3px dashed red;
         }
     }
+
+        /*-----------------------
+            SCROLLBAR CUSTOM
+        ------------------------*/
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: transparent;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: rgba($color: white, $alpha: 0.2);
+        border-radius: 20px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: white;
+        }
 </style>
