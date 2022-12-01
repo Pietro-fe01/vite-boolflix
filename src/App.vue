@@ -32,11 +32,6 @@
         })
         .then(res => {
           this.store.movies = res.data.results;
-          if(res.data.results.length === 0){
-            this.store.moviesNotFound = 'Spiacenti, nessun film trovato!';
-          } else {
-            this.store.moviesNotFound = null;
-          }
         })
       },
       // Match serie TV tramite ricerca input
@@ -50,11 +45,6 @@
         })
         .then(res => {
           this.store.series = res.data.results;
-          if(res.data.results.length === 0){
-            this.store.seriesNotFound = 'Spiacenti, nessuna serie TV trovata!';
-          } else {
-            this.store.seriesNotFound = null;
-          }
         })
       },
       // Lista film più popolari
@@ -80,10 +70,22 @@
           this.store.topRated = res.data.results;
         })
       },
+      findMovieGenres(){
+        axios.get("https://api.themoviedb.org/3/genre/movie/list", {
+          params: {
+            api_key: "b90930156a2c5e50e179e531a115e906",
+            language: "it-IT"
+          }
+        })
+        .then(res => {
+          this.store.movieGenres = res.data.genres;
+        })
+      }
     },
     created(){
       this.findMostPopular();
       this.findTopRated();
+      this.findMovieGenres();
     }
   }
 </script>

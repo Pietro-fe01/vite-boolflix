@@ -1,4 +1,5 @@
 <script>
+import {store} from '/src/store.js';
 
 export default {
     name: 'AppCard',
@@ -10,6 +11,7 @@ export default {
     },
     data(){
         return {
+            store,
             languageFlags: {
                 default: {
                     img: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAYFBMVEXDw8MAAABwcHDHx8eKioqkpKS8vLzGxsatra3KysqQkJCenp6AgIB3d3dra2u3t7dZWVlMTEyysrIsLCxTU1NDQ0OUlJQhISEyMjJlZWUMDAw9PT2Dg4N0dHQYGBhGRkaaAXj3AAACVklEQVR4nO3a63KiQBBAYbATxxYQbxtNdjd5/7dMIFwEGbaA1Fo05/tpNFVzZJgBCQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICFEdFJROTRQ5jKxbvVRLF79CCmkW043XbeEeTpBxo8zXs2ZA2i9RSRiQbPUw5l90wDUw2cqIyIYamBHpP9Lho+GEMNNM7P8IfB/8BOg2qbcNaB/8BQg2qt3ww8J5hpkA2kkAwcj50GUdVgN3AymGkQpPW+1zMXfFeHdhror7LBuvt9GsXHzpHaaVAdCC/dw9FddnnYNU0MNXDp4WuUp6j7bCAv3jXDUIPAabo5eia9K46SS9ffDDX44nxbA7kWM2V/f5gYa+CTnwyKVeMuwjIaSL15CMNj+72LaODWt7fNTotsUG8dcq+t2bCEBpq0bqC2dhA2G4ho/cLN1VT3TtJkA00u57R8xQVvdw2ujdlgsYGusnGWEfRwl6B1aWmwQbEQ/v4elf7pSBCGt7cdDTYoF8K/2XftNp0JGqcEew3qhTD7rt27p8FHPRvMNbhZCN/Wge49CcIwqSJYa9BYCD+07yfpxmcsNQgax/6qJ0H4Xn7EWAM99426pfwhwlYDz0LoU1xGm2rgXQh9vu+smWoQXAY2uJhr0LMQ+uR31gw1GPVs1lZMNUj/PeIOqaUGchrV4Cp2GujrqATZZbSVBr274n5bNdJANuOJjQY8ozl6GtRm3sD9yDPb824QuHjqo/ureOYJ8p8TZKJHDwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOB/+wQBph2Iu8J1cQAAAABJRU5ErkJggg=='
@@ -50,6 +52,16 @@ export default {
             } else {
                 return this.languageFlags.default.img;
             }
+        },
+        // Metodo per stampare i vari generi dei film
+        searchGenres(idGen){
+            let list = "";
+            this.store.movieGenres.forEach(element => {
+                if(element.id === idGen){
+                    list += `${element.name}, `;
+                }
+            });
+            return list
         }
     }
 }
@@ -71,6 +83,9 @@ export default {
                 </div>
                 <div class="votes">
                     <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="genres">
+                    <b>Genere: </b> <span v-for="id in infoMovie.genre_ids">{{this.searchGenres(id)}} </span>
                 </div>
                 <div class="description">
                     <b>Descrizione:</b> 
@@ -98,6 +113,9 @@ export default {
                 <div class="votes">
                     <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
                 </div>
+                <div class="genres">
+                    <b>Genere: </b> <span v-for="id in infoSerie.genre_ids">{{this.searchGenres(id)}} </span>
+                </div>
                 <div class="description">
                     <b>Descrizione:</b> 
                     <span v-if="infoSerie.overview !== ''">{{infoSerie.overview}}</span>
@@ -124,6 +142,9 @@ export default {
                 <div class="votes">
                     <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMostPopular.vote_average / 2).toFixed(0) > index}"></span>
                 </div>
+                <div class="genres">
+                    <b>Genere: </b> <span v-for="id in infoMostPopular.genre_ids">{{this.searchGenres(id)}} </span>
+                </div>
                 <div class="description">
                     <b>Descrizione: </b> 
                     <span v-if="infoMostPopular.overview !== ''">{{infoMostPopular.overview}}</span>
@@ -149,6 +170,9 @@ export default {
                 </div>
                 <div class="votes">
                     <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoTopRated.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="genres">
+                    <b>Genere: </b> <span v-for="id in infoTopRated.genre_ids">{{this.searchGenres(id)}} </span>
                 </div>
                 <div class="description">
                     <b>Descrizione: </b> 
