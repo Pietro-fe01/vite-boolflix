@@ -37,7 +37,7 @@ export default {
                 <form @submit.prevent>
                     <div class="search-box">
                         <button class="btn-search" @click="setFocus()"><i class="fas fa-search"></i></button>
-                        <input type="text" class="input-search" ref="inputsearch" placeholder="Titoli, persone, generi" autofocus v-model="store.searchText" @keyup="$emit('performSearch')">
+                        <input type="text" class="input-search" ref="inputsearch" placeholder="Titoli, persone, generi" pattern="^[^\s]+(\s+[^\s]+)*$" v-model="store.searchText" @keyup="$emit('performSearch')">
                     </div>
                 </form>
                 <button>

@@ -55,6 +55,17 @@
           }
         })
       }
+    },
+    created(){
+      axios.get("https://api.themoviedb.org/3/movie/popular", {
+          params: {
+            api_key: "b90930156a2c5e50e179e531a115e906",
+            language: "it-IT"
+          }
+        })
+        .then(res => {
+          this.store.mostPopular = res.data.results;
+        })
     }
   }
 </script>

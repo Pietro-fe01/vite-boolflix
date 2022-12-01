@@ -11,12 +11,6 @@ export default {
         return {
             store,
         }
-    },
-    methods: {
-        clearAll: function(){
-            this.store.movies = [];
-            this.store.series = [];
-        }
     }
 }
 </script>
@@ -24,7 +18,7 @@ export default {
 <template>
     <main>
         <!-- Film -->
-        <section v-if="(this.store.movies.length > 0)">
+        <section v-if="(this.store.movies.length > 0 && this.store.searchText !== '')">
             <h2>Film</h2>
             <div class="film">
                 <AppCard
@@ -36,7 +30,7 @@ export default {
         <!-- /Film -->
 
         <!-- Serie TV -->
-        <section v-if="(this.store.series.length > 0)">
+        <section v-if="(this.store.series.length > 0 && this.store.searchText !== '')">
             <h2>Serie Tv</h2>
             <div class="serie">
                 <AppCard
@@ -47,12 +41,17 @@ export default {
         </section>
         <!-- /Serie TV -->
 
-        <!-- Messaggio che viene stampato solo se il campo input è vuoto -->
-        <div v-if="this.store.searchText === ''" class="pre-message">
-            <h2>Benvenuto, inizia subito la ricerca !</h2>
-            {{clearAll()}}
-        </div>
-        <!-- /Messaggio che viene stampato solo se il campo input è vuoto -->
+        <!-- Film e Serie TV più popolari -->
+        <section v-if="(this.store.searchText === '')">
+            <h2>I più popolari</h2>
+            <div class="popular">
+                <AppCard
+                v-for="popular in this.store.mostPopular"
+                :infoMostPopular="popular"
+                />
+            </div>
+        </section>
+        <!-- /Film e Serie TV più popolari -->
 
         <!-- Messaggio che viene stampato solo se la ricerca non trova nulla -->
         <div v-if="this.store.searchText.length > 1 && (this.store.movies.length === 0 && this.store.series.length === 0)" class="pre-message">
@@ -75,10 +74,10 @@ export default {
 
         section h2{
             color: white;
-            margin-bottom: 15px;
-            margin-left: 15px;
+            margin-bottom: 5px;
+            margin-left: 20px;
         }
-        div.serie, div.film {
+        div.serie, div.film, div.popular {
             display: flex;
             overflow-x: auto;
             margin-bottom: .9375rem;

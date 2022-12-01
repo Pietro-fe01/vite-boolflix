@@ -5,6 +5,7 @@ export default {
     props: {
         infoMovie: Object,
         infoSerie: Object,
+        infoMostPopular: Object,
     },
     data(){
         return {
@@ -105,6 +106,33 @@ export default {
         </div>
     </div>
     <!-- /Questa card viene utilizzata per le serie TV -->
+
+    <!-- Questa card viene utilizzata per i più popolari -->
+    <div v-else-if="this.infoMostPopular" class="video-card">
+        <!-- {{this.infoMostPopular}} -->
+        <div class="video-card-inner">
+            <div class="cover">
+                <img class="cover__img" v-if="(infoMostPopular.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoMostPopular.poster_path}`" alt="">
+                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+            </div>
+            <div class="card-info">
+                <div class="title"><b>Titolo:</b> {{ infoMostPopular.title }}</div>
+                <div v-if="(!infoMostPopular.original_title === infoMostPopular.title)" class="original-title">Titolo originale: {{ infoMostPopular.original_title }}</div>
+                <div class="language">
+                    <b>Lingua:</b> {{infoMostPopular.original_language}} / <img :src="this.checkLanguage(this.infoMostPopular)" :alt="`${infoMostPopular.original_language}-flag`">
+                </div>
+                <div class="votes">
+                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMostPopular.vote_average / 2).toFixed(0) > index}"></span>
+                </div>
+                <div class="description">
+                    <b>Descrizione: </b> 
+                    <span v-if="infoMostPopular.overview !== ''">{{infoMostPopular.overview}}</span>
+                    <span v-else> non presente, ci scusiamo per il disagio.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Questa card viene utilizzata per i più popolari -->
 </template>
 
 <style lang="scss" scoped>
@@ -113,6 +141,10 @@ export default {
         margin: 20px 0;
         margin-right: 20px;
         perspective: 1000px;
+
+        &:last-child{
+            margin-right: 0;
+        }
         &:hover .video-card-inner {
             transform: rotateY(180deg);
         }
@@ -142,10 +174,11 @@ export default {
             right: 0;
             transition: opacity 0.5s;
             transition:  0.5s;
-            overflow-y: auto;
             line-height: 1.25rem;
             transition: all 0.5s;
             transform: rotateY(180deg);
+            overflow: hidden;
+
             b{
                 border-left: 2px solid red;
                 padding-left: 3px;
