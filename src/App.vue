@@ -78,14 +78,29 @@
           }
         })
         .then(res => {
-          this.store.movieGenres = res.data.genres;
+          this.store.allGenres = res.data.genres;
         })
-      }
+      },
+      findSerieGenres(){
+        axios.get("https://api.themoviedb.org/3/genre/tv/list", {
+          params: {
+            api_key: "b90930156a2c5e50e179e531a115e906",
+            language: "it-IT"
+          }
+        })
+        .then(res => {
+          let serieGenres = res.data.genres;
+          serieGenres.forEach(element => {
+            return this.store.allGenres.push(element)
+          });
+        })
+      },
     },
     created(){
       this.findMostPopular();
       this.findTopRated();
       this.findMovieGenres();
+      this.findSerieGenres();
     }
   }
 </script>

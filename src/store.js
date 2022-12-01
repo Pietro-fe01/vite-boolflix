@@ -6,5 +6,5 @@ export const store = reactive ({
     series: [],
     mostPopular: [],
     topRated: [],
-    movieGenres: [],
+    allGenres: [], 
 });

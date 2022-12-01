@@ -56,12 +56,14 @@ export default {
         // Metodo per stampare i vari generi dei film
         searchGenres(idGen){
             let list = "";
-            this.store.movieGenres.forEach(element => {
+            this.store.allGenres.forEach(element => {
                 if(element.id === idGen){
-                    list += `${element.name}, `;
+                    if(!list.includes(element.name)){
+                        list += `${element.name}, `;
+                    }
                 }
             });
-            return list
+            return list;
         }
     }
 }
