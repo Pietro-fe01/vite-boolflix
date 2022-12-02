@@ -78,19 +78,29 @@ export default {
                 <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
             </div>
             <div class="card-info">
-                <div class="title"><b>Titolo:</b> {{infoMovie.title}}</div>
-                <div v-if="infoMovie.original_title !== infoMovie.title" class="original-title"><b>Titolo Originale: </b> {{infoMovie.original_title}}</div>
+                <div class="title">
+                    <b>Titolo: </b> 
+                    <span>{{infoMovie.title}}</span>
+                </div>
+                <div v-if="infoMovie.original_title !== infoMovie.title" class="original-title">
+                    <b>Titolo Originale: </b>
+                    <span>{{infoMovie.original_title}}</span>
+                </div>
                 <div class="language">
-                    <b>Lingua:</b> {{infoMovie.original_language}} / <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+                    <b>Lingua: </b> 
+                    <span>{{infoMovie.original_language}} / </span> 
+                    <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
                 </div>
                 <div class="votes">
-                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+                    <b>Voto:</b>
+                    <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
                 </div>
                 <div class="genres">
-                    <b>Genere: </b> <span v-for="id in infoMovie.genre_ids">{{this.searchGenres(id)}} </span>
+                    <b>Genere: </b> 
+                    <span v-for="id in infoMovie.genre_ids">{{this.searchGenres(id)}} </span>
                 </div>
                 <div class="description">
-                    <b>Descrizione:</b> 
+                    <b>Descrizione: </b> 
                     <span v-if="infoMovie.overview !== ''">{{infoMovie.overview}}</span>
                     <span v-else> non presente, ci scusiamo per il disagio.</span>
                 </div>
@@ -230,10 +240,14 @@ export default {
             transition: all 0.5s;
             transform: rotateY(180deg);
             overflow: hidden;
+            
+            & > div{
+                margin-bottom: 5px;
+            }
 
             b{
                 border-left: 2px solid red;
-                padding-left: 3px;
+                padding-left: 5px;
             }
             .language img {
                 width: 15px;

@@ -59,6 +59,7 @@
           this.store.mostPopular = res.data.results;
         })
       },
+      // I più votati
       findTopRated(){
         axios.get("https://api.themoviedb.org/3/movie/top_rated", {
           params: {
@@ -70,6 +71,7 @@
           this.store.topRated = res.data.results;
         })
       },
+      // Generi dei film
       findMovieGenres(){
         axios.get("https://api.themoviedb.org/3/genre/movie/list", {
           params: {
@@ -81,6 +83,7 @@
           this.store.allGenres = res.data.genres;
         })
       },
+      // Generi serie TV
       findSerieGenres(){
         axios.get("https://api.themoviedb.org/3/genre/tv/list", {
           params: {

@@ -79,14 +79,12 @@ export default {
         margin-right: 0;
         height: calc(100% - 70px);
         position: relative;
-
         section{
             padding-top: 40px;
             &:last-child{
                 padding-bottom: 40px;
             }
         }   
-
         section h2{
             color: white;
             margin-bottom: 5px;
@@ -110,7 +108,6 @@ export default {
             border: 3px dashed red;
         }
     }
-
         /*-----------------------
             SCROLLBAR CUSTOM
         ------------------------*/
