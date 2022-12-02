@@ -65,136 +65,140 @@ export default {
             });
             return list;
         }
+    },
+    computed: {
+        // Generazione cover del film
+        coverPoster(){
+            let src = "";
+            if(this.infoMovie && this.infoMovie.poster_path){
+                src = `https://image.tmdb.org/t/p/w342${this.infoMovie.poster_path}`
+            } else if (this.infoSerie && this.infoSerie.poster_path){
+                src = `https://image.tmdb.org/t/p/w342${this.infoSerie.poster_path}`
+            } else if (this.infoMostPopular && this.infoMostPopular.poster_path){
+                src = `https://image.tmdb.org/t/p/w342${this.infoMostPopular.poster_path}`
+            } else if (this.infoTopRated && this.infoTopRated.poster_path){
+                src = `https://image.tmdb.org/t/p/w342${this.infoTopRated.poster_path}`
+            } else {
+                src = "/src/assets/cover-default.png";
+            }
+            return src;
+        },
+        titolo(){
+            let titolo = "";
+            if(this.infoMovie){
+                titolo = this.infoMovie.title;
+            }  else if (this.infoSerie){
+                titolo = this.infoSerie.name;
+            } else if (this.infoMostPopular){
+                titolo = this.infoMostPopular.title;
+            } else if (this.infoTopRated){
+                titolo = this.infoTopRated.title;
+            }
+            return titolo;
+        },
+        originalTitle(){
+            let originalTitle = "";
+            if(this.infoMovie){
+                originalTitle = this.infoMovie.original_title;
+            }  else if (this.infoSerie){
+                originalTitle = this.infoSerie.original_name;
+            } else if (this.infoMostPopular){
+                originalTitle = this.infoMostPopular.original_title;
+            } else if (this.infoTopRated){
+                originalTitle = this.infoTopRated.original_title;
+            }
+            return originalTitle;
+        },
+        language(){
+            let lang = "";
+            if(this.infoMovie){
+                lang = this.infoMovie.original_language;
+            }  else if (this.infoSerie){
+                lang = this.infoSerie.original_language;
+            } else if (this.infoMostPopular){
+                lang = this.infoMostPopular.original_language;
+            } else if (this.infoTopRated){
+                lang = this.infoTopRated.original_language;
+            }
+            return lang;
+        },
+        voto(){
+            let vote = null;
+            if(this.infoMovie){
+                vote = (this.infoMovie.vote_average / 2).toFixed(0);
+            }  else if (this.infoSerie){
+                vote = (this.infoSerie.vote_average / 2).toFixed(0);
+            } else if (this.infoMostPopular){
+                vote = (this.infoMostPopular.vote_average / 2).toFixed(0);
+            } else if (this.infoTopRated){
+                vote = (this.infoTopRated.vote_average / 2).toFixed(0);
+            }
+            return vote;
+        },
+        descrizione(){
+            let description = "";
+            if(this.infoMovie){
+                description = this.infoMovie.overview
+            }  else if (this.infoSerie){
+                description = this.infoSerie.overview
+            } else if (this.infoMostPopular){
+                description = this.infoMostPopular.overview
+            } else if (this.infoTopRated){
+                description = this.infoTopRated.overview
+            }
+            return description;
+        }
     }
 }
 </script>
 
 <template>
-    <!-- Questa card viene utilizzata per i film -->
-    <div v-if="this.infoMovie" class="video-card">
+    <div class="video-card">
         <div class="video-card-inner">
+            <!-- Copertina film -->
             <div class="cover">
-                <img class="cover__img" v-if="(infoMovie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoMovie.poster_path}`" alt="">
-                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
+                <img v-if="coverPoster" class="cover__img" :src="coverPoster" alt="">
             </div>
+            <!-- /Copertina film -->
+    
+            <!-- Qui andranno tutte le info relative al film -->
             <div class="card-info">
                 <div class="title">
-                    <b>Titolo: </b> 
-                    <span>{{infoMovie.title}}</span>
+                    <strong>Titolo: </strong> 
+                    <span>{{titolo}}</span>
                 </div>
-                <div v-if="infoMovie.original_title !== infoMovie.title" class="original-title">
-                    <b>Titolo Originale: </b>
-                    <span>{{infoMovie.original_title}}</span>
+                <div v-if="(titolo !== originalTitle)" class="original-title">
+                    <strong>Titolo Originale: </strong>
+                    <span>{{originalTitle}}</span>
                 </div>
                 <div class="language">
-                    <b>Lingua: </b> 
-                    <span>{{infoMovie.original_language}} / </span> 
-                    <img :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+                    <strong>Lingua: </strong> 
+                    <span>{{language}} / </span> 
+                    <img v-if="infoMovie" :src="this.checkLanguage(this.infoMovie)" :alt="`${infoMovie.original_language}-flag`">
+                    <img v-else-if="infoSerie" :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
+                    <img v-else-if="infoMostPopular" :src="this.checkLanguage(this.infoMostPopular)" :alt="`${infoMostPopular.original_language}-flag`">
+                    <img v-else-if="infoTopRated" :src="this.checkLanguage(this.infoTopRated)" :alt="`${infoTopRated.original_language}-flag`">
                 </div>
                 <div class="votes">
-                    <b>Voto:</b>
-                    <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMovie.vote_average / 2).toFixed(0) > index}"></span>
+                    <strong>Voto: </strong>
+                    <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: voto > index}"></span>
                 </div>
                 <div class="genres">
-                    <b>Genere: </b> 
-                    <span v-for="id in infoMovie.genre_ids">{{this.searchGenres(id)}} </span>
+                    <strong>Genere: </strong> 
+                    <span v-if="infoMovie" v-for="id in infoMovie.genre_ids">{{this.searchGenres(id)}} </span>
+                    <span v-else-if="infoSerie" v-for="id in infoSerie.genre_ids">{{this.searchGenres(id)}} </span>
+                    <span v-else-if="infoMostPopular" v-for="id in infoMostPopular.genre_ids">{{this.searchGenres(id)}} </span>
+                    <span v-else-if="infoTopRated" v-for="id in infoTopRated.genre_ids">{{this.searchGenres(id)}} </span>
                 </div>
                 <div class="description">
-                    <b>Descrizione: </b> 
-                    <span v-if="infoMovie.overview !== ''">{{infoMovie.overview}}</span>
-                    <span v-else> non presente, ci scusiamo per il disagio.</span>
+                    <strong>Descrizione: </strong> 
+                    <span>{{descrizione}}</span>
+                    <span v-if="descrizione === ''"> Non presente, ci scusiamo per il disagio.</span>
                 </div>
             </div>
+            <!-- /Qui andranno tutte le info relative al film -->
         </div>
     </div>
-    <!-- /Questa card viene utilizzata per i film -->
-
-    <!-- Questa card viene utilizzata per le serie TV -->
-    <div v-else-if="this.infoSerie" class="video-card">
-        <div class="video-card-inner">
-            <div class="cover">
-                <img class="cover__img" v-if="(infoSerie.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoSerie.poster_path}`" alt="">
-                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
-            </div>
-            <div class="card-info">
-                <div class="title"><b>Titolo:</b> {{ infoSerie.name }}</div>
-                <div v-if="(infoSerie.original_name !== infoSerie.name)" class="original-title"><b>Titolo originale: </b> {{ infoSerie.original_name }}</div>
-                <div class="language">
-                    <b>Lingua:</b> {{infoSerie.original_language}} / <img :src="this.checkLanguage(this.infoSerie)" :alt="`${infoSerie.original_language}-flag`">
-                </div>
-                <div class="votes">
-                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoSerie.vote_average / 2).toFixed(0) > index}"></span>
-                </div>
-                <div class="genres">
-                    <b>Genere: </b> <span v-for="id in infoSerie.genre_ids">{{this.searchGenres(id)}} </span>
-                </div>
-                <div class="description">
-                    <b>Descrizione:</b> 
-                    <span v-if="infoSerie.overview !== ''">{{infoSerie.overview}}</span>
-                    <span v-else> non presente, ci scusiamo per il disagio.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Questa card viene utilizzata per le serie TV -->
-
-    <!-- Questa card viene utilizzata per i più popolari -->
-    <div v-else-if="this.infoMostPopular" class="video-card">
-        <div class="video-card-inner">
-            <div class="cover">
-                <img class="cover__img" v-if="(infoMostPopular.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoMostPopular.poster_path}`" alt="">
-                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
-            </div>
-            <div class="card-info">
-                <div class="title"><b>Titolo:</b> {{ infoMostPopular.title }}</div>
-                <div v-if="(infoMostPopular.original_title !== infoMostPopular.title)" class="original-title"><b>Titolo originale: </b> {{ infoMostPopular.original_title }}</div>
-                <div class="language">
-                    <b>Lingua:</b> {{infoMostPopular.original_language}} / <img :src="this.checkLanguage(this.infoMostPopular)" :alt="`${infoMostPopular.original_language}-flag`">
-                </div>
-                <div class="votes">
-                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoMostPopular.vote_average / 2).toFixed(0) > index}"></span>
-                </div>
-                <div class="genres">
-                    <b>Genere: </b> <span v-for="id in infoMostPopular.genre_ids">{{this.searchGenres(id)}} </span>
-                </div>
-                <div class="description">
-                    <b>Descrizione: </b> 
-                    <span v-if="infoMostPopular.overview !== ''">{{infoMostPopular.overview}}</span>
-                    <span v-else> non presente, ci scusiamo per il disagio.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Questa card viene utilizzata per i più popolari -->
-
-    <!-- Questa card viene utilizzata per i più votati -->
-    <div v-else-if="this.infoTopRated" class="video-card">
-        <div class="video-card-inner">
-            <div class="cover">
-                <img class="cover__img" v-if="(infoTopRated.poster_path != null)" :src="`https://image.tmdb.org/t/p/w342${infoTopRated.poster_path}`" alt="">
-                <div v-else><img class="default-cover" src="/src/assets/cover-default.png" alt="default-cover"></div>
-            </div>
-            <div class="card-info">
-                <div class="title"><b>Titolo:</b> {{ infoTopRated.title }}</div>
-                <div v-if="(infoTopRated.original_title !== infoTopRated.title )" class="original-title"><b>Titolo originale:</b> {{ infoTopRated.original_title }}</div>
-                <div class="language">
-                    <b>Lingua:</b> {{infoTopRated.original_language}} / <img :src="this.checkLanguage(this.infoTopRated)" :alt="`${infoTopRated.original_language}-flag`">
-                </div>
-                <div class="votes">
-                    <b>Voto:</b> <span class="starsicon" v-for="(star, index) in this.starsContainer" v-html="star" :class="{filled_star: (infoTopRated.vote_average / 2).toFixed(0) > index}"></span>
-                </div>
-                <div class="genres">
-                    <b>Genere: </b> <span v-for="id in infoTopRated.genre_ids">{{this.searchGenres(id)}} </span>
-                </div>
-                <div class="description">
-                    <b>Descrizione: </b> 
-                    <span v-if="infoTopRated.overview !== ''">{{infoTopRated.overview}}</span>
-                    <span v-else> non presente, ci scusiamo per il disagio.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Questa card viene utilizzata per i più votati -->
 </template>
 
 <style lang="scss" scoped>
@@ -245,7 +249,7 @@ export default {
                 margin-bottom: 5px;
             }
 
-            b{
+            strong{
                 border-left: 2px solid red;
                 padding-left: 5px;
             }
