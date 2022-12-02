@@ -16,13 +16,7 @@
     },
     methods: {
       findFilmsAndSeries(){
-        if(this.store.searchText !== ''){
-          this.findFilms();
-          this.findSeries();
-        }
-      },
-      // Match film tramite ricerca input
-      findFilms(){
+        // Chiamata API per i film
         axios.get("https://api.themoviedb.org/3/search/movie", {
           params: {
             api_key: "b90930156a2c5e50e179e531a115e906",
@@ -32,10 +26,9 @@
         })
         .then(res => {
           this.store.movies = res.data.results;
-        })
-      },
-      // Match serie TV tramite ricerca input
-      findSeries(){
+        });
+
+        // Chiamata API per le serie TV
         axios.get("https://api.themoviedb.org/3/search/tv", {
           params: {
             api_key: "b90930156a2c5e50e179e531a115e906",
@@ -45,7 +38,7 @@
         })
         .then(res => {
           this.store.series = res.data.results;
-        })
+        });
       },
       // Lista film più popolari
       findMostPopular(){
