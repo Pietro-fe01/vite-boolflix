@@ -14,7 +14,6 @@ export default {
         },
         genreSelected(value){
             this.store.genresFilter = value.target.value;
-            console.log(this.store.genresFilter)
         }
     }
 }
@@ -38,12 +37,37 @@ export default {
                     </ul>
                 </nav>
             </div>
-            
             <div class="right-menu">
                 <form @submit.prevent>
                     <select name="" id="genre-select" @change="genreSelected">
                         <option value="Tutti i generi" selected>Tutti i generi</option>
+                        <option value="Action & Adventure">Action & Adventure</option>
+                        <option value="Animazione">Animazione</option>
+                        <option value="Avventura">Avventura</option>
+                        <option value="Azione">Azione</option>
+                        <option value="Commedia">Commedia</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentario">Documentario</option>
+                        <option value="Dramma">Dramma</option>
+                        <option value="Famiglia">Famiglia</option>
                         <option value="Fantascienza">Fantascienza</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Guerra">Guerra</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Mistero">Mistero</option>
+                        <option value="Musica">Musica</option>
+                        <option value="News">News</option>
+                        <option value="Reality">Reality</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</option>
+                        <option value="Soap">Soap</option>
+                        <option value="Storia">Storia</option>
+                        <option value="Talk">Talk</option>
+                        <option value="Televisione film">Televisione film</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="War & Politics">War & Politics</option>
+                        <option value="Western">Western</option>
                     </select>
                     <div class="search-box">
                         <button class="btn-search" @click="setFocus()"><i class="fas fa-search"></i></button>

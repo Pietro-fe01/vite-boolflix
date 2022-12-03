@@ -57,6 +57,7 @@ export default {
                 '<i class="fa-solid fa-star"></i>',
                 '<i class="fa-solid fa-star"></i>',
             ],
+            list: [],
         }
     },
     methods: {
@@ -70,15 +71,19 @@ export default {
         },
         // Metodo per stampare i vari generi dei film
         searchGenres(idGen){
-            let list = "";
+            let i = 0;
             this.store.allGenres.forEach(element => {
-                if(element.id === idGen){
-                    if(!list.includes(element.name)){
-                        list += `${element.name}, `;
+                if(element.id === idGen[i]){
+                    if(!this.list.includes(element.name)){
+                        this.list.push(element.name);
                     }
+                    i++;
                 }
             });
-            return list;
+            return this.list;
+        },
+        prova(){
+            console.log("ciao")
         }
     },
     computed: {
@@ -179,9 +184,9 @@ export default {
     }
 }
 </script>
-
+<!-- (this.searchGenres(generi).includes(this.store.genresFilter) || this.store.genresFilter !== 'Tutti i generi') -->
 <template>
-    <div class="video-card">
+    <div class="video-card" v-if="(this.searchGenres(generi).includes(this.store.genresFilter) || this.store.genresFilter === 'Tutti i generi')">
         <div class="video-card-inner">
             <!-- Copertina film -->
             <div class="cover">
@@ -210,7 +215,7 @@ export default {
                 </div>
                 <div class="genres">
                     <strong>Genere: </strong> 
-                    <span v-for="id in generi">{{this.searchGenres(id)}} </span>
+                    <span v-for="genre in this.searchGenres(generi)">{{genre}}, </span>
                 </div>
                 <div class="description">
                     <strong>Descrizione: </strong> 

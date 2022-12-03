@@ -7,5 +7,5 @@ export const store = reactive ({
     mostPopular: [],
     topRated: [],
     allGenres: [],
-    genresFilter: '',
+    genresFilter: 'Tutti i generi',
 });
