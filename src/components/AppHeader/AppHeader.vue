@@ -11,6 +11,10 @@ export default {
     methods: {
         setFocus(){
             return this.$refs.inputsearch.focus()
+        },
+        genreSelected(value){
+            this.store.genresFilter = value.target.value;
+            console.log(this.store.genresFilter)
         }
     }
 }
@@ -20,7 +24,9 @@ export default {
     <header>
         <div class="container">
             <div class="left-menu">
-                <img class="logo" src="/src/assets/netflix-logo.png" alt="netflix-logo">
+                <a href="#">
+                    <img class="logo" src="/src/assets/netflix-logo.png" alt="netflix-logo">
+                </a>
                 <nav>
                     <ul>
                         <li><a href="#">Home</a></li>
@@ -35,6 +41,10 @@ export default {
             
             <div class="right-menu">
                 <form @submit.prevent>
+                    <select name="" id="genre-select" @change="genreSelected">
+                        <option value="Tutti i generi" selected>Tutti i generi</option>
+                        <option value="Fantascienza">Fantascienza</option>
+                    </select>
                     <div class="search-box">
                         <button class="btn-search" @click="setFocus()"><i class="fas fa-search"></i></button>
                         <input type="text" class="input-search" ref="inputsearch" placeholder="Titoli, persone, generi" pattern="^[^\s]+(\s+[^\s]+)*$" v-model="store.searchText" @keyup="$emit('performSearch')">
@@ -78,9 +88,13 @@ export default {
                     & li{
                         margin-left: 1.25rem;
                         a{
-                            color: white;
+                            color: rgba(255,255,255, 0.8);
                             text-decoration: none;
                             font-weight: 31.25rem;
+                        }
+                        &:hover a{
+                            filter: drop-shadow(0 0 5px white);
+                            color: white;
                         }
                     }
                 }
@@ -91,9 +105,16 @@ export default {
                 & > *{
                     margin-left: 1.25rem;
                 }
-                form button{
-                    background-color: lightgray;
-                    border-color: white;
+                form{
+                    display: flex;
+                    align-items: center;
+                    & select{
+                        margin-right: 10px;
+                    }
+                    & button{
+                        background-color: lightgray;
+                        border-color: white;
+                    }
                 }
                 .my-profile{
                     display: flex;

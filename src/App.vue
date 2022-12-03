@@ -17,28 +17,30 @@
     methods: {
       findFilmsAndSeries(){
         // Chiamata API per i film
-        axios.get("https://api.themoviedb.org/3/search/movie", {
-          params: {
-            api_key: "b90930156a2c5e50e179e531a115e906",
-            query: this.store.searchText,
-            language: "it-IT"
-          }
-        })
-        .then(res => {
-          this.store.movies = res.data.results;
-        });
-
-        // Chiamata API per le serie TV
-        axios.get("https://api.themoviedb.org/3/search/tv", {
-          params: {
-            api_key: "b90930156a2c5e50e179e531a115e906",
-            query: this.store.searchText,
-            language: "it-IT"
-          }
-        })
-        .then(res => {
-          this.store.series = res.data.results;
-        });
+        if(this.store.searchText !== ""){
+          axios.get("https://api.themoviedb.org/3/search/movie", {
+            params: {
+              api_key: "b90930156a2c5e50e179e531a115e906",
+              query: this.store.searchText,
+              language: "it-IT"
+            }
+          })
+          .then(res => {
+            this.store.movies = res.data.results;
+          });
+  
+          // Chiamata API per le serie TV
+          axios.get("https://api.themoviedb.org/3/search/tv", {
+            params: {
+              api_key: "b90930156a2c5e50e179e531a115e906",
+              query: this.store.searchText,
+              language: "it-IT"
+            }
+          })
+          .then(res => {
+            this.store.series = res.data.results;
+          });
+        }
       },
       // Lista film più popolari
       findMostPopular(){
