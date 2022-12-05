@@ -11,7 +11,8 @@
     },
     data(){
       return {
-        store
+        store,
+        pageCounter: 1
       }
     },
     methods: {
@@ -43,11 +44,12 @@
         }
       },
       // Lista film più popolari
-      findMostPopular(){
+      findMostPopular(pageNumber){
         axios.get("https://api.themoviedb.org/3/movie/popular", {
           params: {
             api_key: "b90930156a2c5e50e179e531a115e906",
-            language: "it-IT"
+            language: "it-IT",
+            page: pageNumber
           }
         })
         .then(res => {
@@ -93,6 +95,12 @@
           });
         })
       },
+      changing(whichCategory){
+        if(whichCategory === 'popular'){
+          this.pageCounter++;
+          this.findMostPopular(this.pageCounter)
+        }
+      }
     },
     created(){
       this.findMostPopular();
@@ -105,7 +113,7 @@
 
 <template>
   <AppHeader @performSearch="findFilmsAndSeries"/>
-  <AppMain />
+  <AppMain @changePage="changing"/>
 </template>
 
 <style lang="scss">

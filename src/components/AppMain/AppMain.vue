@@ -46,10 +46,12 @@ export default {
             <section>
                 <h2>I più popolari</h2>
                 <div class="popular">
+                    <button class="change-page back">Pagina precedente</button>
                     <AppCard
                     v-for="popular in this.store.mostPopular"
                     :infoMostPopular="popular"
                     />
+                    <button class="change-page next" @click="$emit('changePage', 'popular')">Pagina successiva</button>
                 </div>
             </section>
 
@@ -84,12 +86,19 @@ export default {
             &:last-child{
                 padding-bottom: 40px;
             }
+            h2{
+                color: white;
+                margin-bottom: 5px;
+                margin-left: 20px;
+            }
+            .change-page{
+                color: white;
+                background-color: gray;
+                &.back{
+                    margin-right: 20px;
+                }
+            }
         }   
-        section h2{
-            color: white;
-            margin-bottom: 5px;
-            margin-left: 20px;
-        }
         div.serie, div.film, div.popular, div.top-rated {
             display: flex;
             overflow-x: auto;

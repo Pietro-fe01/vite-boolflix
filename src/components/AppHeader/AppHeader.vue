@@ -36,10 +36,7 @@ export default {
                         <li><a href="#">Sfoglia per lingua</a></li>
                     </ul>
                 </nav>
-            </div>
-            <div class="right-menu">
-                <form @submit.prevent>
-                    <select name="" id="genre-select" @change="genreSelected">
+                <select class="custom-select" name="" id="genre-select" @change="genreSelected">
                         <option value="Tutti i generi" selected>Tutti i generi</option>
                         <option value="Action & Adventure">Action & Adventure</option>
                         <option value="Animazione">Animazione</option>
@@ -69,6 +66,9 @@ export default {
                         <option value="War & Politics">War & Politics</option>
                         <option value="Western">Western</option>
                     </select>
+            </div>
+            <div class="right-menu">
+                <form @submit.prevent>
                     <div class="search-box">
                         <button class="btn-search" @click="setFocus()"><i class="fas fa-search"></i></button>
                         <input type="text" class="input-search" ref="inputsearch" placeholder="Titoli, persone, generi" pattern="^[^\s]+(\s+[^\s]+)*$" v-model="store.searchText" @keyup="$emit('performSearch')">
@@ -122,6 +122,16 @@ export default {
                         }
                     }
                 }
+                & .custom-select{
+                    margin-right: 10px;
+                    background-color: black;
+                    color: rgba(255,255,255, 0.8);
+                    border-color: white;
+                    padding: 5px 10px;
+                    margin-left: 1.25rem;
+                    outline: none;
+                    cursor: pointer;
+                }
             }
             .right-menu{
                 display: flex;
@@ -132,9 +142,6 @@ export default {
                 form{
                     display: flex;
                     align-items: center;
-                    & select{
-                        margin-right: 10px;
-                    }
                     & button{
                         background-color: lightgray;
                         border-color: white;
